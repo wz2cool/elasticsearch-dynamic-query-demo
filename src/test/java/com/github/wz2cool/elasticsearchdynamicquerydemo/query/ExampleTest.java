@@ -2,7 +2,7 @@ package com.github.wz2cool.elasticsearchdynamicquerydemo.query;
 
 import com.github.wz2cool.elasticsearch.model.FilterMode;
 import com.github.wz2cool.elasticsearch.query.DynamicQuery;
-import com.github.wz2cool.elasticsearchdynamicquerydemo.ElasticsearchDynamicQueryDemoApplicationTests;
+import com.github.wz2cool.elasticsearchdynamicquerydemo.TestApplication;
 import com.github.wz2cool.elasticsearchdynamicquerydemo.dao.TestExampleEsDAO;
 import com.github.wz2cool.elasticsearchdynamicquerydemo.model.TestExampleES;
 import org.apache.commons.lang3.ArrayUtils;
@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration(classes = ElasticsearchDynamicQueryDemoApplicationTests.class)
+@ContextConfiguration(classes = TestApplication.class)
 public class ExampleTest {
 
     @Resource
