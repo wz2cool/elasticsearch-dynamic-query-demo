@@ -15,10 +15,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import static com.github.wz2cool.elasticsearch.helper.BuilderHelper.mustNot;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 
 @RunWith(SpringRunner.class)
@@ -59,6 +62,21 @@ public class StudentTest {
             data.add(studentES);
         }
         studentEsDAO.save(data.toArray(new StudentES[0]));
+    }
+
+    @Test
+    public void testMustNot() {
+        DynamicQuery<StudentES> filterQuery = DynamicQuery.createQuery(StudentES.class)
+                .and(StudentES::getId, o -> o.terms(1L, 3L, 5L));
+        final List<StudentES> studentES = studentEsDAO.selectByDynamicQuery(filterQuery);
+        assertEquals(3, studentES.size());
+
+        DynamicQuery<StudentES> mustNotQuery = DynamicQuery.createQuery(StudentES.class)
+                .and(mustNot(), StudentES::getId, o -> o.terms(1L, 3L, 5L));
+        final List<StudentES> studentES1 = studentEsDAO.selectByDynamicQuery(mustNotQuery);
+        for (StudentES es : studentES1) {
+            assertFalse(Arrays.asList(1L, 3L, 5L).contains(es.getId()));
+        }
     }
 
     @Test
