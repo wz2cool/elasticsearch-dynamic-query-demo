@@ -18,8 +18,6 @@ public class StudentEsDAO {
 
     @Resource
     private StudentEsQueryMapper studentEsMapper;
-    @Resource
-    private ElasticsearchTemplate elasticsearchTemplate;
 
     public void save(StudentES... students) {
         studentEsMapper.saveAll(Arrays.asList(students));
