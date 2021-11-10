@@ -2,7 +2,7 @@ package com.github.wz2cool.elasticsearchdynamicquerydemo.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.*;
 
 @Document(indexName = "test_student", type = "testStudent")
 public class StudentES {
@@ -10,10 +10,24 @@ public class StudentES {
     private float score;
     @Id
     private Long id;
+    @MultiField(
+            mainField = @Field(type = FieldType.Keyword),
+            otherFields = {
+                    @InnerField(suffix = "wide", type = FieldType.Text)
+            }
+    )
     private String name;
+    @Transient
+    @Field("name.wide")
+    private String nameWide;
     private Integer age;
     @Transient
     private String nameHit;
+    @Transient
+    private String nameWideHit;
+
+    @Field(type = FieldType.Object)
+    private ClassroomES classroom;
 
     public Long getId() {
         return id;
@@ -53,5 +67,29 @@ public class StudentES {
 
     public void setScore(float score) {
         this.score = score;
+    }
+
+    public ClassroomES getClassroom() {
+        return classroom;
+    }
+
+    public void setClassroom(ClassroomES classroom) {
+        this.classroom = classroom;
+    }
+
+    public String getNameWide() {
+        return nameWide;
+    }
+
+    public void setNameWide(String nameWide) {
+        this.nameWide = nameWide;
+    }
+
+    public String getNameWideHit() {
+        return nameWideHit;
+    }
+
+    public void setNameWideHit(String nameWideHit) {
+        this.nameWideHit = nameWideHit;
     }
 }
