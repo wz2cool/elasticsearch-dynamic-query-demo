@@ -3,9 +3,8 @@ package com.github.wz2cool.elasticsearchdynamicquerydemo.dao;
 import com.github.wz2cool.elasticsearch.model.LogicPagingResult;
 import com.github.wz2cool.elasticsearch.query.DynamicQuery;
 import com.github.wz2cool.elasticsearch.query.LogicPagingQuery;
-import com.github.wz2cool.elasticsearchdynamicquerydemo.mapper.StudentEsQueryMapper;
+import com.github.wz2cool.elasticsearchdynamicquerydemo.mapper.StudentEsMapper;
 import com.github.wz2cool.elasticsearchdynamicquerydemo.model.StudentES;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 public class StudentEsDAO {
 
     @Resource
-    private StudentEsQueryMapper studentEsMapper;
+    private StudentEsMapper studentEsMapper;
 
     public void save(StudentES... students) {
         studentEsMapper.saveAll(Arrays.asList(students));
