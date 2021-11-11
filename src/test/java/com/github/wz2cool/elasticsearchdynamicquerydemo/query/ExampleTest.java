@@ -1,6 +1,5 @@
 package com.github.wz2cool.elasticsearchdynamicquerydemo.query;
 
-import com.github.wz2cool.elasticsearch.model.FilterMode;
 import com.github.wz2cool.elasticsearch.query.DynamicQuery;
 import com.github.wz2cool.elasticsearch.query.FilterGroup;
 import com.github.wz2cool.elasticsearchdynamicquerydemo.TestApplication;
@@ -23,7 +22,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.wz2cool.elasticsearch.helper.BuilderHelper.*;
+import static com.github.wz2cool.elasticsearch.helper.BuilderHelper.asc;
+import static com.github.wz2cool.elasticsearch.helper.BuilderHelper.desc;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -90,8 +90,8 @@ public class ExampleTest {
     @Test
     public void testTermsInteger() {
         DynamicQuery<TestExampleES> query = DynamicQuery.createQuery(TestExampleES.class)
-                .and(filter(), TestExampleES::getId, o -> o.terms(3L, 6L, 9L))
-                .orderBy(TestExampleES::getId, asc());
+                .and(TestExampleES::getId, o -> o.terms(3L, 6L, 9L))
+                .orderBy(TestExampleES::getId, SortOrder.ASC);
         final List<TestExampleES> testExampleES = testExampleEsDAO.selectByDynamicQuery(query);
         assertEquals(Integer.valueOf(3), testExampleES.get(0).getP2());
         assertEquals(Integer.valueOf(6), testExampleES.get(1).getP2());
@@ -142,15 +142,12 @@ public class ExampleTest {
         FilterGroup<TestExampleES> filterGroup = new FilterGroup<TestExampleES>()
                 .or(TestExampleES::getId, o -> o.term(1L))
                 .or(TestExampleES::getId, o -> o.term(3L));
-        final QueryBuilder queryBuilder = filterGroup.getFilterQuery();
 
         DynamicQuery<TestExampleES> query = DynamicQuery.createQuery(TestExampleES.class)
-                // custom 传参
-                .and(queryBuilder)
+                .and(filterGroup)
                 .orderBy(TestExampleES::getId, desc());
         final List<TestExampleES> testExampleES = testExampleEsDAO.selectByDynamicQuery(query);
         assertEquals(Integer.valueOf(3), testExampleES.get(0).getP2());
         assertEquals(Integer.valueOf(1), testExampleES.get(1).getP2());
-
     }
 }
