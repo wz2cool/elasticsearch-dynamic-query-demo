@@ -114,10 +114,10 @@ public class StudentTest {
     @Test
     public void testNested() {
         DynamicQuery<StudentES> query = DynamicQuery.createQuery(StudentES.class)
-                .and(StudentES::getName, o -> o.term("student1"))
-                .and("student1", o -> o.multiMatch(StudentES::getName, StudentES::getNameWide))
                 .highlightMapping(StudentES::getName, StudentES::setNameHit)
                 .highlightMapping(StudentES::getNameWide, StudentES::setNameWideHit)
+                .and(StudentES::getName, o -> o.term("student1"))
+                .and("student1", o -> o.multiMatch(StudentES::getName, StudentES::getNameWide))
                 .orderBy(StudentES::getId, asc())
                 .orderBy(StudentES::getAge, desc());
         final List<StudentES> studentESList = studentEsDAO.selectByDynamicQuery(query);
