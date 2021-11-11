@@ -5,10 +5,11 @@ import com.github.wz2cool.elasticsearchdynamicquerydemo.TestApplication;
 import com.github.wz2cool.elasticsearchdynamicquerydemo.dao.StudentEsDAO;
 import com.github.wz2cool.elasticsearchdynamicquerydemo.model.ClassroomES;
 import com.github.wz2cool.elasticsearchdynamicquerydemo.model.StudentES;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -25,6 +26,8 @@ import static junit.framework.TestCase.assertTrue;
 @SpringBootTest
 @ContextConfiguration(classes = TestApplication.class)
 public class StudentTest {
+
+    private static final Logger LOG = LoggerFactory.getLogger(StudentTest.class);
 
     @Resource
     private StudentEsDAO studentEsDAO;
@@ -63,9 +66,12 @@ public class StudentTest {
 
     @Test
     public void testObject() {
+        final boolean debugEnabled = LOG.isDebugEnabled();
+        if (debugEnabled) {
+            LOG.debug("1111");
+        }
         DynamicQuery<StudentES> query = DynamicQuery.createQuery(StudentES.class)
                 .and(StudentES::getClassroom, ClassroomES::getId, o -> o.term(1L));
-        final QueryBuilder queryBuilder = query.buildQuery();
         final List<StudentES> studentESList = studentEsDAO.selectByDynamicQuery(query);
         assertTrue(studentESList.size() > 0);
         for (StudentES studentES : studentESList) {
@@ -80,7 +86,6 @@ public class StudentTest {
                 .and("student1", o -> o.multiMatch(StudentES::getName, StudentES::getNameWide))
                 .highlightMapping(StudentES::getName, StudentES::setNameHit)
                 .highlightMapping(StudentES::getNameWide, StudentES::setNameWideHit);
-        final QueryBuilder queryBuilder = query.buildQuery();
         final List<StudentES> studentESList = studentEsDAO.selectByDynamicQuery(query);
         assertEquals(1, studentESList.size());
         assertEquals(Long.valueOf(1), studentESList.get(0).getId());
