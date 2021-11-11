@@ -19,8 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.github.wz2cool.elasticsearch.helper.BuilderHelper.asc;
-import static com.github.wz2cool.elasticsearch.helper.BuilderHelper.mustNot;
+import static com.github.wz2cool.elasticsearch.helper.BuilderHelper.*;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -118,7 +117,9 @@ public class StudentTest {
                 .and(StudentES::getName, o -> o.term("student1"))
                 .and("student1", o -> o.multiMatch(StudentES::getName, StudentES::getNameWide))
                 .highlightMapping(StudentES::getName, StudentES::setNameHit)
-                .highlightMapping(StudentES::getNameWide, StudentES::setNameWideHit);
+                .highlightMapping(StudentES::getNameWide, StudentES::setNameWideHit)
+                .orderBy(StudentES::getId, asc())
+                .orderBy(StudentES::getAge, desc());
         final List<StudentES> studentESList = studentEsDAO.selectByDynamicQuery(query);
         assertEquals(1, studentESList.size());
         assertEquals(Long.valueOf(1), studentESList.get(0).getId());

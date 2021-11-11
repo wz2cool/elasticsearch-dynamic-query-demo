@@ -145,7 +145,8 @@ public class ExampleTest {
 
         DynamicQuery<TestExampleES> query = DynamicQuery.createQuery(TestExampleES.class)
                 .and(filterGroup)
-                .orderBy(TestExampleES::getId, desc());
+                .orderBy(TestExampleES::getId, desc())
+                .orderBy(TestExampleES::getP3, desc());
         final List<TestExampleES> testExampleES = testExampleEsDAO.selectByDynamicQuery(query);
         assertEquals(Integer.valueOf(3), testExampleES.get(0).getP2());
         assertEquals(Integer.valueOf(1), testExampleES.get(1).getP2());
