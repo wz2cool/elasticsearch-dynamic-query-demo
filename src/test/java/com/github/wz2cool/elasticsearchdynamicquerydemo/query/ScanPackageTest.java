@@ -1,23 +1,20 @@
 package com.github.wz2cool.elasticsearchdynamicquerydemo.query;
 
 import com.github.wz2cool.elasticsearchdynamicquerydemo.TestApplication;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = TestApplication.class)
 public class ScanPackageTest {

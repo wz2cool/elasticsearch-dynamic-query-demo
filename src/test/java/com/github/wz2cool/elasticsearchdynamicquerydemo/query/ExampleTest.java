@@ -7,14 +7,11 @@ import com.github.wz2cool.elasticsearchdynamicquerydemo.dao.TestExampleEsDAO;
 import com.github.wz2cool.elasticsearchdynamicquerydemo.model.TestExampleES;
 import org.apache.commons.lang3.ArrayUtils;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -24,10 +21,9 @@ import java.util.List;
 
 import static com.github.wz2cool.elasticsearch.helper.BuilderHelper.asc;
 import static com.github.wz2cool.elasticsearch.helper.BuilderHelper.desc;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = TestApplication.class)
 public class ExampleTest {
@@ -35,7 +31,7 @@ public class ExampleTest {
     @Resource
     private TestExampleEsDAO testExampleEsDAO;
 
-    @Before
+    @BeforeEach
     public void init() {
 
         mockData();

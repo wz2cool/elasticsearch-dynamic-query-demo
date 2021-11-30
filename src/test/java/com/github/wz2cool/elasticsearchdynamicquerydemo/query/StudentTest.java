@@ -5,14 +5,13 @@ import com.github.wz2cool.elasticsearchdynamicquerydemo.TestApplication;
 import com.github.wz2cool.elasticsearchdynamicquerydemo.dao.StudentEsDAO;
 import com.github.wz2cool.elasticsearchdynamicquerydemo.model.ClassroomES;
 import com.github.wz2cool.elasticsearchdynamicquerydemo.model.StudentES;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -20,12 +19,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.github.wz2cool.elasticsearch.helper.BuilderHelper.*;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = TestApplication.class)
 public class StudentTest {
@@ -35,7 +31,7 @@ public class StudentTest {
     @Resource
     private StudentEsDAO studentEsDAO;
 
-    @Before
+    @BeforeEach
     public void init() {
 
         mockData();
