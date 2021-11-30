@@ -9,7 +9,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Document(indexName = "test_example", type = "testExample")
+@Document(indexName = "test_example")
 public class TestExampleES {
 
     @Id
