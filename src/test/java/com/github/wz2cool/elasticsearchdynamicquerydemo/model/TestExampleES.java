@@ -14,7 +14,7 @@ public class TestExampleES {
 
     @Id
     private Long id;
-    @Field(type = FieldType.Text, analyzer = "hanlp_index")
+    @Field(type = FieldType.Text)
     private String p1;
     private Integer p2;
     private Long p3;
